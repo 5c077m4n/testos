@@ -7,6 +7,26 @@
 use core::panic::PanicInfo;
 use testos::*;
 
+#[cfg(not(test))]
+#[panic_handler]
+fn panic(info: &PanicInfo) -> ! {
+	println!("{}", info);
+	loop {}
+}
+
+#[no_mangle]
+pub extern "C" fn _start() -> ! {
+	println!("HELLO FROM TESTOS");
+
+	init();
+	x86_64::instructions::interrupts::int3();
+
+	#[cfg(test)]
+	test_main();
+
+	loop {}
+}
+
 #[cfg(test)]
 fn test_runner(tests: &[&dyn tests::Testable]) {
 	serial_println!("Running {} tests", tests.len());
@@ -17,28 +37,12 @@ fn test_runner(tests: &[&dyn tests::Testable]) {
 	qemu::exit(qemu::ExitCode::Success);
 }
 
-#[cfg(not(test))]
-#[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
-	println!("{}", info);
-	loop {}
-}
 #[cfg(test)]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
 	serial_println!("[failed]\n");
 	serial_println!("Error: {}\n", info);
 	qemu::exit(qemu::ExitCode::Fail);
-
-	loop {}
-}
-
-#[no_mangle]
-pub extern "C" fn _start() -> ! {
-	println!("HELLO FROM TESTOS");
-
-	#[cfg(test)]
-	test_main();
 
 	loop {}
 }

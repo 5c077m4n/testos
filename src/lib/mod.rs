@@ -11,9 +11,14 @@ pub mod serial;
 pub mod tests;
 pub mod vga_buffer;
 
+pub fn init() {
+	interrupts::init_idt();
+}
+
 #[cfg(test)]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+    init();
 	test_main();
 	loop {}
 }
