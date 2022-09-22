@@ -4,11 +4,11 @@
 #![test_runner(crate::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
-use testos::*;
 use core::panic::PanicInfo;
+use testos::*;
 
 #[cfg(test)]
-fn test_runner(tests: &[&dyn Testable]) {
+fn test_runner(tests: &[&dyn tests::Testable]) {
 	serial_println!("Running {} tests", tests.len());
 	for test in tests {
 		test.run();
