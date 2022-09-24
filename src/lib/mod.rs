@@ -5,6 +5,7 @@
 #![reexport_test_harness_main = "test_main"]
 #![feature(abi_x86_interrupt)]
 
+pub mod gdt;
 pub mod interrupts;
 pub mod qemu;
 pub mod serial;
@@ -12,13 +13,14 @@ pub mod tests;
 pub mod vga_buffer;
 
 pub fn init() {
+	gdt::init();
 	interrupts::init_idt();
 }
 
 #[cfg(test)]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    init();
+	init();
 	test_main();
 	loop {}
 }

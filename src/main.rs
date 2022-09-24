@@ -17,11 +17,7 @@ fn panic(info: &PanicInfo) -> ! {
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
 	println!("HELLO FROM TESTOS");
-
 	init();
-	unsafe {
-		*(0xdeadbeef as *mut u64) = 42;
-	};
 
 	#[cfg(test)]
 	test_main();
