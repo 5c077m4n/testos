@@ -110,7 +110,7 @@ impl<'w> Writer<'w> {
 		match byte {
 			b'\n' => self.new_line(),
 			byte => {
-				if self.column_position > BUFFER_WIDTH {
+				if self.column_position >= BUFFER_WIDTH {
 					self.new_line();
 				}
 
