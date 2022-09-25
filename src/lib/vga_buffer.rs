@@ -1,13 +1,14 @@
 #![allow(dead_code)]
 
 use core::{
-	fmt,
+	fmt::{Arguments, Result, Write},
 	ops::{Deref, DerefMut},
 	prelude::rust_2021::*,
 };
 use lazy_static::lazy_static;
 use spin::Mutex;
 use volatile::Volatile;
+use x86_64::instructions::interrupts;
 
 const BUFFER_HEIGHT: usize = 25;
 const BUFFER_WIDTH: usize = 80;
@@ -137,17 +138,18 @@ impl<'w> Writer<'w> {
 		}
 	}
 }
-impl<'w> fmt::Write for Writer<'w> {
-	fn write_str(&mut self, s: &str) -> fmt::Result {
+impl<'w> Write for Writer<'w> {
+	fn write_str(&mut self, s: &str) -> Result {
 		self.write(s);
-		fmt::Result::Ok(())
+		Result::Ok(())
 	}
 }
 
 #[doc(hidden)]
-pub fn _print(args: fmt::Arguments) {
-	use core::fmt::Write;
-	WRITER.lock().write_fmt(args).unwrap();
+pub fn _print(args: Arguments) {
+	interrupts::without_interrupts(|| {
+		WRITER.lock().write_fmt(args).unwrap();
+	});
 }
 
 #[macro_export]
