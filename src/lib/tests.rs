@@ -1,4 +1,4 @@
-use super::{qemu, serial_print, serial_println};
+use super::{hlt_loop, qemu, serial_print, serial_println};
 use core::{any::type_name, panic::PanicInfo, prelude::rust_2021::*};
 
 pub trait Testable {
@@ -27,5 +27,6 @@ pub fn test_panic_handler(info: &PanicInfo) -> ! {
 	serial_println!("[failed]\n");
 	serial_println!("Error: {}\n", info);
 	qemu::exit(qemu::ExitCode::Fail);
-	loop {}
+
+	hlt_loop();
 }

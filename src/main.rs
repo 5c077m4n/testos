@@ -11,7 +11,7 @@ use testos::*;
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
 	println!("{}", info);
-	loop {}
+	hlt_loop();
 }
 
 #[no_mangle]
@@ -22,7 +22,7 @@ pub extern "C" fn _start() -> ! {
 	#[cfg(test)]
 	test_main();
 
-	loop {}
+	hlt_loop();
 }
 
 #[cfg(test)]
