@@ -7,10 +7,10 @@ edition = "2021"
 bootloader = "0.9"
 lazy_static = { version = "1.4", features = ["spin_no_std"] }
 pic8259 = "0.10"
-spin = "0.9.4"
-uart_16550 = "0.2.18"
+spin = "0.9"
+uart_16550 = "0.2"
 volatile = "0.4.5"
-x86_64 = "0.14.10"
+x86_64 = "0.14"
 
 [lib]
 name = "testos"
@@ -20,6 +20,8 @@ path = "src/lib/mod.rs"
 name = "stack_overflow"
 harness = false
 
+[profile.test]
+panic = "unwind"
 [profile.dev]
 panic = "abort"
 [profile.release]
