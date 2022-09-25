@@ -45,8 +45,8 @@ pub enum Color {
 struct ColorCode(u8);
 
 impl ColorCode {
-	fn new(foreground: Color, background: Color) -> ColorCode {
-		ColorCode((background as u8) << 4 | (foreground as u8))
+	fn new(foreground: Color, background: Color) -> Self {
+		Self((background as u8) << 4 | (foreground as u8))
 	}
 }
 
@@ -184,7 +184,7 @@ mod tests {
 
 		for (i, c) in s.chars().enumerate() {
 			let screen_char = WRITER.lock().buffer.chars[BUFFER_HEIGHT - 2][i].read();
-			core::assert_eq!(char::from(screen_char.ascii_character), c);
+			assert_eq!(char::from(screen_char.ascii_character), c);
 		}
 	}
 }
