@@ -5,9 +5,8 @@ use uart_16550::SerialPort;
 use x86_64::instructions::interrupts;
 
 lazy_static! {
-	pub static ref SERIAL_1: Mutex<SerialPort> = {
+	static ref SERIAL_PORT: Mutex<SerialPort> = {
 		let mut serial_port = unsafe { SerialPort::new(0x3F8) };
-
 		serial_port.init();
 		Mutex::new(serial_port)
 	};
@@ -16,7 +15,7 @@ lazy_static! {
 #[doc(hidden)]
 pub fn _print(args: Arguments) {
 	interrupts::without_interrupts(|| {
-		SERIAL_1
+		SERIAL_PORT
 			.lock()
 			.write_fmt(args)
 			.expect("Printing to serial failed");
