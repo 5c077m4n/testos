@@ -4,13 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-bootloader = "0.9"
+bootloader = { version = "0.9", features = ["map_physical_memory"] }
 lazy_static = { version = "1.4", features = ["spin_no_std"] }
-pc-keyboard = "0.5.1"
+pc-keyboard = "0.5"
 pic8259 = "0.10"
 spin = "0.9"
 uart_16550 = "0.2"
-volatile = "0.4.5"
+volatile = "0.4"
 x86_64 = "0.14"
 
 [lib]
