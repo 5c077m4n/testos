@@ -5,6 +5,7 @@ use core::{
 	ops::{Deref, DerefMut},
 	prelude::rust_2021::*,
 };
+
 use lazy_static::lazy_static;
 use spin::Mutex;
 use volatile::Volatile;

@@ -5,6 +5,7 @@
 #![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
+
 use testos::{qemu, serial_print, serial_println};
 
 #[no_mangle]

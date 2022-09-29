@@ -1,4 +1,3 @@
-use super::{gdt, hlt_loop, print, println};
 use lazy_static::lazy_static;
 use pc_keyboard::{layouts, DecodedKey, HandleControl, Keyboard, ScancodeSet1};
 use pic8259::ChainedPics;
@@ -8,6 +7,8 @@ use x86_64::{
 	registers::control::Cr2,
 	structures::idt::{InterruptDescriptorTable, InterruptStackFrame, PageFaultErrorCode},
 };
+
+use super::{gdt, hlt_loop, print, println};
 
 pub const PIC_1_OFFSET: u8 = 32;
 pub const PIC_2_OFFSET: u8 = PIC_1_OFFSET + 8;

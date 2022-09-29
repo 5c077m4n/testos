@@ -1,5 +1,6 @@
-use super::{hlt_loop, qemu, serial_print, serial_println};
 use core::{any::type_name, panic::PanicInfo, prelude::rust_2021::*};
+
+use super::{hlt_loop, qemu, serial_print, serial_println};
 
 pub trait Testable {
 	fn run(&self) -> ();
