@@ -7,6 +7,7 @@
 
 pub mod gdt;
 pub mod interrupts;
+pub mod memory;
 pub mod qemu;
 pub mod serial;
 pub mod tests;
@@ -26,12 +27,13 @@ pub fn hlt_loop() -> ! {
 }
 
 #[cfg(test)]
-#[no_mangle]
-pub extern "C" fn _start() -> ! {
+fn test_kernel_main(_boot_info: &'static bootloader::BootInfo) -> ! {
 	init();
 	test_main();
 	hlt_loop();
 }
+#[cfg(test)]
+bootloader::entry_point!(test_kernel_main);
 
 #[cfg(test)]
 #[panic_handler]
