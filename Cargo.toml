@@ -13,10 +13,6 @@ uart_16550 = "0.2"
 volatile = "0.4"
 x86_64 = "0.14"
 
-[lib]
-name = "testos"
-path = "src/lib/mod.rs"
-
 [[test]]
 name = "stack_overflow"
 harness = false
